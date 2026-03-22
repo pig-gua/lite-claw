@@ -27,6 +27,7 @@
  */
 
 import './index.css';
+import './App.tsx';
 
 console.log(
   '👋 This message is being logged by "renderer.ts", included via Vite',

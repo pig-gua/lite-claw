@@ -26,8 +26,8 @@ const createWindow = () => {
     );
   }
 
-  // Open the DevTools.
-  mainWindow.webContents.openDevTools();
+  // Open the DevTools. Ctrl + Shift +I 可以手动打开 DevTools。
+  // mainWindow.webContents.openDevTools();
 };
 
 // This method will be called when Electron has finished
