@@ -27,6 +27,8 @@ npm install
 ```bash
 # 启动开发模式
 npm start
+
+# Ctrl + Shift +I 可以手动打开 DevTools
 ```
 
 ## 构建与打包
