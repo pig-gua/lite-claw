@@ -10,8 +10,16 @@ if (started) {
 const createWindow = () => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+    // 初始化窗口大小
+    width: 1024,
+    height: 768,
+    // 最小窗口大小
+    minWidth: 1024,
+    minHeight: 768,
+    // 居中显示窗口
+    center: true,
+    // 自动隐藏菜单栏
+    autoHideMenuBar: true,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
     },
