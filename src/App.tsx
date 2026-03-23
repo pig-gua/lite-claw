@@ -5,6 +5,10 @@ import router from '@/router';
 function App() {
   return (
     <>
+      {/* 标题栏 */}
+      <div className="titlebar">Lite Claw</div>
+
+      {/* 路由内容 */}
       <RouterProvider router={router} />
     </>
   );

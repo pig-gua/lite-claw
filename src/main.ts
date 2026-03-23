@@ -18,7 +18,10 @@ const createWindow = () => {
     minHeight: 768,
     // 居中显示窗口
     center: true,
-    // 自动隐藏菜单栏
+    // 隐藏标题栏
+    titleBarStyle: 'hidden',
+    ...(process.platform !== 'darwin' ? { titleBarOverlay: true } : {}),
+    // 隐藏菜单栏
     autoHideMenuBar: true,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),

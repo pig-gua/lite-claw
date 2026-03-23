@@ -4,3 +4,14 @@ body {
     sans-serif;
   margin: 0;
 }
+
+.titlebar {
+  height: 32px;
+  background: linear-gradient(to right, #f9f9f9 256px, #fff 256px);
+  color: #000000;
+  display: flex;
+  justify-content: flex-start; /* 文字靠左对齐 */
+  padding-left: 84px; /* 离左侧84px */
+  align-items: center;
+  app-region: drag;
+}

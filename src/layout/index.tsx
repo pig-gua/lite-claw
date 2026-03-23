@@ -75,7 +75,7 @@ const Layout = () => {
     };
 
     return (
-        <LayoutComponent style={{ height: '100vh', background: '#ffffff' }}>
+        <LayoutComponent style={{ height: 'calc(100vh - 32px)', background: '#ffffff' }}>
             <Sider width={256} style={{ background: '#f9f9f9' }}>
                 <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
                     <Menu
