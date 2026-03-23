@@ -8,7 +8,7 @@
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
-  background: #ffffff;
+  background: #f9f9f9;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {

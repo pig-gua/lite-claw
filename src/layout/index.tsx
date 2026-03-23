@@ -75,14 +75,15 @@ const Layout = () => {
     };
 
     return (
-        <LayoutComponent style={{ height: '100vh' }}>
-            <Sider width={256} style={{ background: '#fff' }}>
+        <LayoutComponent style={{ height: '100vh', background: '#ffffff' }}>
+            <Sider width={256} style={{ background: '#f9f9f9' }}>
                 <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
                     <Menu
                         onClick={handleMenuClick}
                         selectedKeys={[selectedKey]}
                         defaultOpenKeys={['manage']}
                         mode="inline"
+                        style={{ background: '#f9f9f9' }}
                         items={manageItems}
                     />
                     <div className="custom-scrollbar" style={{ flex: 1, overflow: 'auto' }}>
@@ -91,6 +92,7 @@ const Layout = () => {
                             selectedKeys={[selectedKey]}
                             defaultOpenKeys={[]}
                             mode="inline"
+                            style={{ background: '#f9f9f9' }}
                             items={chatItems}
                         />
                     </div>
