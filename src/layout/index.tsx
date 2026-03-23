@@ -1,11 +1,12 @@
 import { ApiOutlined, DashboardOutlined, OpenAIOutlined, ReadOutlined, TeamOutlined } from "@ant-design/icons";
 import { Layout as LayoutComponent, Menu, MenuProps } from "antd";
 import { Outlet } from "react-router";
+import "./scrollbar.css";
 
 const { Sider, Content } = LayoutComponent;
 
 type MenuItem = Required<MenuProps>['items'][number];
-const items: MenuItem[] = [
+const manageItems: MenuItem[] = [
     {
         key: 'manage',
         label: '管理面板',
@@ -38,6 +39,8 @@ const items: MenuItem[] = [
             },
         ],
     },
+];
+const chatItems: MenuItem[] = [
     {
         type: 'divider',
     },
@@ -64,19 +67,32 @@ const items: MenuItem[] = [
 
 const Layout = () => {
     return (
-        <LayoutComponent style={{ minHeight: '100vh', maxHeight: '100vh' }}>
-            <Sider width={256} style={{ background: '#fff', minHeight: '100vh', maxHeight: '100vh' }}>
-                <Menu
-                    onClick={(e) => {
-                        console.log('click ', e);
-                    }}
-                    defaultSelectedKeys={['1']}
-                    defaultOpenKeys={['sub1']}
-                    mode="inline"
-                    items={items}
-                />
+        <LayoutComponent style={{ height: '100vh' }}>
+            <Sider width={256} style={{ background: '#fff' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+                    <Menu
+                        onClick={(e) => {
+                            console.log('click ', e);
+                        }}
+                        defaultSelectedKeys={['manage']}
+                        defaultOpenKeys={['manage']}
+                        mode="inline"
+                        items={manageItems}
+                    />
+                    <div className="custom-scrollbar" style={{ flex: 1, overflow: 'auto' }}>
+                        <Menu
+                            onClick={(e) => {
+                                console.log('click ', e);
+                            }}
+                            defaultSelectedKeys={[]}
+                            defaultOpenKeys={[]}
+                            mode="inline"
+                            items={chatItems}
+                        />
+                    </div>
+                </div>
             </Sider>
-            <Content style={{ margin: '0 24px 24px', minHeight: '100vh', maxHeight: '100vh' }}>
+            <Content style={{ margin: '0 24px 24px' }}>
                 <Outlet />
             </Content>
         </LayoutComponent>
