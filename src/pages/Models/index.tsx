@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { EllipsisOutlined, SettingOutlined } from '@ant-design/icons';
 import { Avatar, Card, Flex } from 'antd';
 
@@ -39,6 +40,34 @@ const models: Model[] = [
 ];
 
 const ModelsPage = () => {
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setScreenWidth(window.innerWidth);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // 根据屏幕宽度计算每行显示的卡片数量
+  const getCardWidth = () => {
+    if (screenWidth < 768) {
+      // 小屏幕：1列
+      return '100%';
+    } else if (screenWidth < 1024) {
+      // 中等屏幕：2列
+      return 'calc((100vw - 256px - 48px - 12px)/2)';
+    } else if (screenWidth < 1440) {
+      // 大屏幕：3列
+      return 'calc((100vw - 256px - 48px - 18px)/3)';
+    } else {
+      // 超大屏幕：4列
+      return 'calc((100vw - 256px - 48px - 24px)/4)';
+    }
+  };
+
   return (
     <div>
       <div
@@ -55,15 +84,17 @@ const ModelsPage = () => {
         {models.map((model) => (
           <Card
             key={model.name}
-            style={{
-              width: 'calc((100vw - 256px - 48px - 24px)/3)',
-            }}
+            style={{ width: getCardWidth() }}
             actions={[
               <SettingOutlined key="setting" />,
               <EllipsisOutlined key="ellipsis" />,
             ]}
           >
-            <Meta title={model.name} description={model.description} />
+            <Meta
+              style={{ height: 126 }}
+              title={model.name}
+              description={model.description}
+            />
           </Card>
         ))}
       </Flex>
