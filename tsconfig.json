@@ -11,6 +11,11 @@
     "outDir": "dist",
     "moduleResolution": "node",
     "resolveJsonModule": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+
+    /* 路径别名 */
+    "paths": {
+      "@/*": ["src/*"]
+    }
   }
 }
