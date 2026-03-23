@@ -1,6 +1,7 @@
 import { ApiOutlined, DashboardOutlined, OpenAIOutlined, ReadOutlined, TeamOutlined } from "@ant-design/icons";
 import { Layout as LayoutComponent, Menu, MenuProps } from "antd";
 import { Outlet } from "react-router";
+import { useState } from "react";
 import "./scrollbar.css";
 
 const { Sider, Content } = LayoutComponent;
@@ -66,25 +67,28 @@ const chatItems: MenuItem[] = [
 ];
 
 const Layout = () => {
+    const [selectedKey, setSelectedKey] = useState<string>('manage');
+
+    const handleMenuClick = (e: any) => {
+        setSelectedKey(e.key);
+        console.log('click ', e);
+    };
+
     return (
         <LayoutComponent style={{ height: '100vh' }}>
             <Sider width={256} style={{ background: '#fff' }}>
                 <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
                     <Menu
-                        onClick={(e) => {
-                            console.log('click ', e);
-                        }}
-                        defaultSelectedKeys={['manage']}
+                        onClick={handleMenuClick}
+                        selectedKeys={[selectedKey]}
                         defaultOpenKeys={['manage']}
                         mode="inline"
                         items={manageItems}
                     />
                     <div className="custom-scrollbar" style={{ flex: 1, overflow: 'auto' }}>
                         <Menu
-                            onClick={(e) => {
-                                console.log('click ', e);
-                            }}
-                            defaultSelectedKeys={[]}
+                            onClick={handleMenuClick}
+                            selectedKeys={[selectedKey]}
                             defaultOpenKeys={[]}
                             mode="inline"
                             items={chatItems}
