@@ -14,6 +14,30 @@ const routes: CustomRouteObject[] = [
                 path: '/',
                 Component: lazy(() => import("@/pages/DashBoard"))
             },
+            {
+                path: '/dashboard',
+                Component: lazy(() => import("@/pages/DashBoard"))
+            },
+            {
+                path: '/models',
+                Component: lazy(() => import("@/pages/Models"))
+            },
+            {
+                path: '/tools',
+                Component: lazy(() => import("@/pages/Tools"))
+            },
+            {
+                path: '/skills',
+                Component: lazy(() => import("@/pages/Skills"))
+            },
+            {
+                path: '/agents',
+                Component: lazy(() => import("@/pages/Agents"))
+            },
+            {
+                path: '/chat/:id',
+                Component: lazy(() => import("@/pages/Chat"))
+            },
         ]
     },
 ];

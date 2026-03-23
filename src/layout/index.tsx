@@ -1,6 +1,6 @@
 import { ApiOutlined, DashboardOutlined, OpenAIOutlined, ReadOutlined, TeamOutlined } from "@ant-design/icons";
 import { Layout as LayoutComponent, Menu, MenuProps } from "antd";
-import { Outlet } from "react-router";
+import { Outlet, useNavigate } from "react-router";
 import { useState } from "react";
 import "./scrollbar.css";
 
@@ -50,27 +50,25 @@ const chatItems: MenuItem[] = [
         label: 'Agent列表',
         type: 'group',
         children: [
-            { key: '13', label: 'Agent1' },
-            { key: '14', label: 'Agent2' },
-            { key: '15', label: 'Agent3' },
-            { key: '16', label: 'Agent4' },
-            { key: '17', label: 'Agent5' },
-            { key: '18', label: 'Agent6' },
-            { key: '19', label: 'Agent7' },
-            { key: '20', label: 'Agent8' },
-            { key: '21', label: 'Agent9' },
-            { key: '22', label: 'Agent10' },
-            { key: '23', label: 'Agent11' },
-            { key: '24', label: 'Agent12' },
+            { key: '1', label: '豆包' },
+            { key: '2', label: '龙虾' },
+            { key: '3', label: '元宝' },
+            { key: '4', label: '土豆' },
         ],
     },
 ];
 
 const Layout = () => {
-    const [selectedKey, setSelectedKey] = useState<string>('manage');
+    const [selectedKey, setSelectedKey] = useState<string>('dashboard');
+    const navigate = useNavigate();
 
-    const handleMenuClick = (e: any) => {
+    const handleMenuClick = (type: 'manage' | 'chat', e: any) => {
         setSelectedKey(e.key);
+        if (type === 'manage') {
+            navigate(e.key);
+        } else if (type === 'chat') {
+            navigate(`/chat/${e.key}`);
+        }
         console.log('click ', e);
     };
 
@@ -79,16 +77,16 @@ const Layout = () => {
             <Sider width={256} style={{ background: '#f9f9f9' }}>
                 <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
                     <Menu
-                        onClick={handleMenuClick}
+                        onClick={(e) => handleMenuClick('manage', e)}
                         selectedKeys={[selectedKey]}
-                        defaultOpenKeys={['manage']}
+                        defaultOpenKeys={['dashboard']}
                         mode="inline"
                         style={{ background: '#f9f9f9' }}
                         items={manageItems}
                     />
                     <div className="custom-scrollbar" style={{ flex: 1, overflow: 'auto' }}>
                         <Menu
-                            onClick={handleMenuClick}
+                            onClick={(e) => handleMenuClick('chat', e)}
                             selectedKeys={[selectedKey]}
                             defaultOpenKeys={[]}
                             mode="inline"
