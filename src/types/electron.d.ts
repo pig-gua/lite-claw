@@ -1,0 +1,41 @@
+declare global {
+  interface Window {
+    modelService: {
+      getModels: () => Promise<Array<{
+        name: string;
+        description: string;
+        endpoint: string;
+        model: string;
+        token: string;
+        headers: Record<string, string>;
+      }>>;
+      addModel: (model: {
+        name: string;
+        description: string;
+        endpoint: string;
+        model: string;
+        token: string;
+        headers: Record<string, string>;
+      }) => Promise<void>;
+      updateModel: (model: {
+        name: string;
+        description: string;
+        endpoint: string;
+        model: string;
+        token: string;
+        headers: Record<string, string>;
+      }) => Promise<void>;
+      deleteModel: (name: string) => Promise<void>;
+      testModelService: (model: {
+        name: string;
+        description: string;
+        endpoint: string;
+        model: string;
+        token: string;
+        headers: Record<string, string>;
+      }) => Promise<boolean>;
+    };
+  }
+}
+
+export {};

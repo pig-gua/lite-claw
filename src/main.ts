@@ -1,6 +1,7 @@
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, ipcMain } from 'electron';
 import path from 'node:path';
 import started from 'electron-squirrel-startup';
+import * as modelService from './service/model-service';
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (started) {
@@ -65,3 +66,24 @@ app.on('activate', () => {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
+
+// 模型服务 IPC 事件处理
+ipcMain.handle('modelService:getModels', () => {
+  return modelService.getModels();
+});
+
+ipcMain.handle('modelService:addModel', (_, model) => {
+  return modelService.addModel(model);
+});
+
+ipcMain.handle('modelService:updateModel', (_, model) => {
+  return modelService.updateModel(model);
+});
+
+ipcMain.handle('modelService:deleteModel', (_, name) => {
+  return modelService.deleteModel(name);
+});
+
+ipcMain.handle('modelService:testModelService', (_, model) => {
+  return modelService.testModelService(model);
+});

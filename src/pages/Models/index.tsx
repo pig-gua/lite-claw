@@ -1,38 +1,13 @@
 import { useState, useEffect } from 'react';
 import { EllipsisOutlined, MinusCircleOutlined, PlusOutlined, SettingOutlined } from '@ant-design/icons';
-import { Avatar, Button, Card, Divider, Flex, Form, Input, Modal, Select, Space } from 'antd';
+import { Button, Card, Divider, Flex, Form, Input, Modal, Space } from 'antd';
+import { Model } from '@/service/model-service';
 
 const { Meta } = Card;
 
-type Model = {
-  name: string;
-  description: string;
-};
-const models: Model[] = [
-  {
-    name: 'Qwen-2.5-Chat-Plus-1',
-    description: '千问',
-  },
-  {
-    name: 'Qwen-2.5-Chat-Plus-2',
-    description: '千问2',
-  },
-  {
-    name: 'Qwen-2.5-Chat-Plus-3',
-    description: '千问3',
-  },
-  {
-    name: 'Qwen-2.5-Chat-Plus-4',
-    description: '千问4',
-  },
-  {
-    name: 'Qwen-2.5-Chat-Plus-5',
-    description: '千问5',
-  },
-];
-
 const ModelsPage = () => {
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+  const [models, setModels] = useState<Model[]>([]);
 
   const [isInsertModalOpen, setIsInsertModalOpen] = useState(false);
   const [insertForm] = Form.useForm();
@@ -44,6 +19,13 @@ const ModelsPage = () => {
 
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  useEffect(() => {
+    window.modelService.getModels().then((models) => {
+      console.log(models);
+      setModels(models);
+    });
   }, []);
 
   // 根据屏幕宽度计算每行显示的卡片数量
@@ -120,7 +102,13 @@ const ModelsPage = () => {
               insertForm.validateFields();
               console.log(insertForm.getFieldsValue());
             }}>测试连接</Button>
-            <Button type="primary" onClick={() => setIsInsertModalOpen(false)}>确认</Button>
+            <Button type="primary" onClick={() => {
+              insertForm.validateFields().then((values) => {
+                window.modelService.addModel(values).then(() => {
+                  setIsInsertModalOpen(false);
+                });
+              });
+            }}>确认</Button>
           </>
         )}
       >
