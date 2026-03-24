@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { EllipsisOutlined, MinusCircleOutlined, PlusOutlined, SettingOutlined } from '@ant-design/icons';
-import { Button, Card, Divider, Flex, Form, Input, Modal, Space } from 'antd';
+import { DeleteOutlined, EllipsisOutlined, MinusCircleOutlined, PlusOutlined, SettingOutlined } from '@ant-design/icons';
+import { Button, Card, Divider, Dropdown, Empty, Flex, Form, Input, Modal, Popconfirm, Space } from 'antd';
 import { Model } from '@/service/model-service';
 
 const { Meta } = Card;
@@ -70,14 +70,34 @@ const ModelsPage = () => {
           新增模型
         </Button>
       </div>
+      {models.length == 0 && (
+        <Empty style={{ marginTop: 132 }} description="暂无模型" />
+      )}
       <Flex wrap gap="small">
         {models.map((model) => (
           <Card
             key={model.name}
             style={{ width: getCardWidth() }}
             actions={[
-              <SettingOutlined key="setting" />,
-              <EllipsisOutlined key="ellipsis" />,
+              <SettingOutlined key="setting" style={{ color: '#1677ff' }} />,
+              <Popconfirm
+                title="删除模型"
+                description="确认删除模型吗？模型删除将无法恢复。"
+                onConfirm={() => {
+                  window.modelService.deleteModel(model.name).then(() => {
+                    // 重新获取模型数据
+                    window.modelService.getModels().then((models) => {
+                      setModels(models);
+                    });
+                  });
+                }}
+                onCancel={() => { }}
+                okText="确认"
+                cancelText="取消"
+              >
+                <DeleteOutlined key="delete" style={{ color: '#f5222d' }} />
+              </Popconfirm>
+
             ]}
           >
             <Meta
@@ -106,6 +126,11 @@ const ModelsPage = () => {
               insertForm.validateFields().then((values) => {
                 window.modelService.addModel(values).then(() => {
                   setIsInsertModalOpen(false);
+                  insertForm.resetFields();
+                  // 重新获取模型数据
+                  window.modelService.getModels().then((models) => {
+                    setModels(models);
+                  });
                 });
               });
             }}>确认</Button>
