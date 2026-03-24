@@ -60,13 +60,6 @@ const chatItems: MenuItem[] = [
       { key: '2', label: '龙虾' },
       { key: '3', label: '元宝' },
       { key: '4', label: '土豆' },
-      { key: '5', label: '鱼香肉丝' },
-      { key: '6', label: '红烧肉' },
-      { key: '7', label: '青椒肉丝' },
-      { key: '8', label: '红烧肉' },
-      { key: '9', label: '红烧肉' },
-      { key: '10', label: '红烧肉' },
-      { key: '11', label: '红烧肉' },
     ],
   },
 ];
