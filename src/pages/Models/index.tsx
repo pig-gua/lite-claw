@@ -242,7 +242,7 @@ const ModelsPage = () => {
           style={{ maxWidth: 600, marginTop: 24 }}
         >
           <Form.Item name="name" label="名称" rules={[{ required: true }]}>
-            <Input />
+            <Input disabled />
           </Form.Item>
           <Form.Item name="description" label="备注" rules={[{ required: false }]}>
             <Input />
