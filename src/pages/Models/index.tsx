@@ -29,14 +29,6 @@ const models: Model[] = [
     name: 'Qwen-2.5-Chat-Plus-5',
     description: '千问5',
   },
-  {
-    name: 'Qwen-2.5-Chat-Plus-6',
-    description: '千问6',
-  },
-  {
-    name: 'Qwen-2.5-Chat-Plus-7',
-    description: '千问7',
-  },
 ];
 
 const ModelsPage = () => {

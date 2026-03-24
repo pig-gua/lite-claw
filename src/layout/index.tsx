@@ -118,7 +118,7 @@ const Layout = () => {
       </Sider>
       <Content
         className="content-scrollbar"
-        style={{ padding: '0 24px 24px', height: '100%' }}
+        style={{ padding: '0 18px 24px', height: '100%', overflow: 'auto', scrollbarGutter: 'stable both-edges' }}
       >
         <Outlet />
       </Content>
