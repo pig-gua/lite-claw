@@ -70,10 +70,8 @@ export function deleteModel(name: string) {
 
 // 测试模型服务
 export function testModelService(model: Model): Promise<boolean> {
+  console.log('测试模型服务', model);
   return new Promise((resolve) => {
-    // 测试模型服务
-    console.log('测试模型服务', model);
-    
     // 构造测试请求数据
     const testData = {
       model: model.model,

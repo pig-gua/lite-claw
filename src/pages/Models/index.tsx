@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { DeleteOutlined, EllipsisOutlined, MinusCircleOutlined, PlusOutlined, SettingOutlined } from '@ant-design/icons';
-import { Button, Card, Divider, Dropdown, Empty, Flex, Form, Input, Modal, Popconfirm, Space } from 'antd';
+import { Button, Card, Divider, Dropdown, Empty, Flex, Form, Input, message, Modal, Popconfirm, Space } from 'antd';
 import { Model } from '@/service/model-service';
 
 const { Meta } = Card;
@@ -14,6 +14,8 @@ const ModelsPage = () => {
 
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [updateForm] = Form.useForm();
+
+  const [testing, setTesting] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
@@ -125,10 +127,20 @@ const ModelsPage = () => {
         onCancel={() => setIsInsertModalOpen(false)}
         footer={(_, { }) => (
           <>
-            <Button onClick={() => {
-              console.log('test connection');
+            <Button loading={testing} onClick={() => {
               insertForm.validateFields();
-              console.log(insertForm.getFieldsValue());
+              setTesting(true);
+              window.modelService.testModelService(insertForm.getFieldsValue()).then((res: boolean) => {
+                if (res) {
+                  message.success('连接成功');
+                } else {
+                  message.error('连接失败');
+                }
+              }).catch(() => {
+                message.error('连接失败');
+              }).finally(() => {
+                setTesting(false);
+              });
             }}>测试连接</Button>
             <Button type="primary" onClick={() => {
               insertForm.validateFields().then((values) => {
@@ -212,10 +224,20 @@ const ModelsPage = () => {
         onCancel={() => setIsUpdateModalOpen(false)}
         footer={(_, { }) => (
           <>
-            <Button onClick={() => {
-              console.log('test connection');
+            <Button loading={testing} onClick={() => {
               updateForm.validateFields();
-              console.log(updateForm.getFieldsValue());
+              setTesting(true);
+              window.modelService.testModelService(updateForm.getFieldsValue()).then((res: boolean) => {
+                if (res) {
+                  message.success('连接成功');
+                } else {
+                  message.error('连接失败');
+                }
+              }).catch(() => {
+                message.error('连接失败');
+              }).finally(() => {
+                setTesting(false);
+              });
             }}>测试连接</Button>
             <Button type="primary" onClick={() => {
               updateForm.validateFields().then((values) => {
