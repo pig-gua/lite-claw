@@ -12,6 +12,9 @@ const ModelsPage = () => {
   const [isInsertModalOpen, setIsInsertModalOpen] = useState(false);
   const [insertForm] = Form.useForm();
 
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+  const [updateForm] = Form.useForm();
+
   useEffect(() => {
     const handleResize = () => {
       setScreenWidth(window.innerWidth);
@@ -31,19 +34,20 @@ const ModelsPage = () => {
   // 根据屏幕宽度计算每行显示的卡片数量
   const getCardWidth = () => {
     if (screenWidth < 768) {
-      // 小屏幕：1列
+      // 小屏幕: 1列
       return '100%';
     } else if (screenWidth < 1024) {
-      // 中等屏幕：2列
+      // 中等屏幕: 2列
       return 'calc((100vw - 256px - 48px - 12px)/2)';
     } else if (screenWidth < 1440) {
-      // 大屏幕：3列
+      // 大屏幕: 3列
       return 'calc((100vw - 256px - 48px - 18px)/3)';
     } else {
-      // 超大屏幕：4列
+      // 超大屏幕: 4列
       return 'calc((100vw - 256px - 48px - 24px)/4)';
     }
   };
+
 
   return (
     <div>
@@ -79,7 +83,11 @@ const ModelsPage = () => {
             key={model.name}
             style={{ width: getCardWidth() }}
             actions={[
-              <SettingOutlined key="setting" style={{ color: '#1677ff' }} />,
+              <SettingOutlined key="setting" style={{ color: '#1677ff' }} onClick={
+                () => {
+                  updateForm.setFieldsValue(model);
+                  setIsUpdateModalOpen(true);
+                }} />,
               <Popconfirm
                 title="删除模型"
                 description="确认删除模型吗？模型删除将无法恢复。"
@@ -139,6 +147,93 @@ const ModelsPage = () => {
       >
         <Form
           form={insertForm}
+          labelCol={{ span: 4 }}
+          wrapperCol={{ span: 20 }}
+          onFinish={(values) => {
+            console.log(values);
+          }}
+          style={{ maxWidth: 600, marginTop: 24 }}
+        >
+          <Form.Item name="name" label="名称" rules={[{ required: true }]}>
+            <Input />
+          </Form.Item>
+          <Form.Item name="description" label="备注" rules={[{ required: false }]}>
+            <Input />
+          </Form.Item>
+          <Divider />
+          <Form.Item name="endpoint" label="endpoint" rules={[{ required: true }]}>
+            <Input />
+          </Form.Item>
+          <Form.Item name="model" label="model" rules={[{ required: true }]}>
+            <Input />
+          </Form.Item>
+          <Form.Item name="token" label="Bear Token" rules={[{ required: false }]}>
+            <Input />
+          </Form.Item>
+          <Form.Item name="headers" label="headers" rules={[{ required: false }]}>
+            <Form.List name="headers">
+              {(fields, { add, remove }) => (
+                <>
+                  {fields.map(({ key, name, ...restField }) => (
+                    <Space key={key} style={{ display: 'flex', marginBottom: 8 }} align="baseline">
+                      <Form.Item
+                        {...restField}
+                        name={[name, 'first']}
+                        rules={[{ required: true, message: 'Missing header key' }]}
+                      >
+                        <Input placeholder="Key" />
+                      </Form.Item>
+                      <Form.Item
+                        {...restField}
+                        name={[name, 'last']}
+                        rules={[{ required: true, message: 'Missing header value' }]}
+                      >
+                        <Input placeholder="Value" />
+                      </Form.Item>
+                      <MinusCircleOutlined onClick={() => remove(name)} />
+                    </Space>
+                  ))}
+                  <Form.Item>
+                    <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
+                      Add field
+                    </Button>
+                  </Form.Item>
+                </>
+              )}
+            </Form.List>
+          </Form.Item>
+        </Form>
+      </Modal>
+      <Modal
+        title="更新模型"
+        centered={false}
+        mask={{ closable: false }}
+        open={isUpdateModalOpen}
+        onCancel={() => setIsUpdateModalOpen(false)}
+        footer={(_, { }) => (
+          <>
+            <Button onClick={() => {
+              console.log('test connection');
+              updateForm.validateFields();
+              console.log(updateForm.getFieldsValue());
+            }}>测试连接</Button>
+            <Button type="primary" onClick={() => {
+              updateForm.validateFields().then((values) => {
+                window.modelService.updateModel(values).then(() => {
+                  setIsUpdateModalOpen(false);
+                  updateForm.resetFields();
+                  // 重新获取模型数据
+                  window.modelService.getModels().then((models) => {
+                    setModels(models);
+                  });
+                });
+              });
+            }}>确认</Button>
+          </>
+        )}
+      >
+        <Form
+          form={updateForm}
           labelCol={{ span: 4 }}
           wrapperCol={{ span: 20 }}
           onFinish={(values) => {
