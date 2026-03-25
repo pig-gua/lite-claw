@@ -23,3 +23,20 @@ contextBridge.exposeInMainWorld('modelService', {
   testModelService: (model: Model): Promise<boolean> => ipcRenderer.invoke('modelService:testModelService', model)
 });
 
+// 工具服务
+// 渲染进程调用方法: window.toolService.getMcpServers()
+type McpServer = {
+  name: string;
+  type: string;
+  url: string;
+  command: string;
+  args: string[];
+};
+
+contextBridge.exposeInMainWorld('toolService', {
+  getMcpServers: (): Promise<McpServer[]> => ipcRenderer.invoke('toolService:getMcpServers'),
+  addMcpServer: (serverConfig: McpServer): Promise<void> => ipcRenderer.invoke('toolService:addMcpServer', serverConfig),
+  updateMcpServer: (serverConfig: McpServer): Promise<void> => ipcRenderer.invoke('toolService:updateMcpServer', serverConfig),
+  deleteMcpServer: (name: string): Promise<void> => ipcRenderer.invoke('toolService:deleteMcpServer', name)
+});
+

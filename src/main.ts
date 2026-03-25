@@ -94,12 +94,12 @@ ipcMain.handle('toolService:getMcpServers', () => {
   return toolService.getMcpServers();
 });
 
-ipcMain.handle('toolService:addMcpServer', (_, server) => {
-  return toolService.addMcpServer(server);
+ipcMain.handle('toolService:addMcpServer', (_, serverConfig) => {
+  return toolService.addMcpServer(serverConfig);
 });
 
-ipcMain.handle('toolService:updateMcpServer', (_, server) => {
-  return toolService.updateMcpServer(server);
+ipcMain.handle('toolService:updateMcpServer', (_, serverConfig) => {
+  return toolService.updateMcpServer(serverConfig);
 });
 
 ipcMain.handle('toolService:deleteMcpServer', (_, name) => {
