@@ -72,7 +72,11 @@ const ToolsPage = () => {
             right: 12,
           }}
           color="primary" variant="solid"
-          onClick={() => setIsInsertModalOpen(true)}
+          onClick={() => {
+            setType('');
+            insertForm.resetFields();
+            setIsInsertModalOpen(true);
+          }}
         >
           新增Mcp服务器
         </Button>
@@ -132,6 +136,13 @@ const ToolsPage = () => {
             <Button loading={testing} onClick={() => {
               insertForm.validateFields();
               setTesting(true);
+              window.toolService.testMcpServer(insertForm.getFieldsValue()).then((tools: Tool[]) => {
+                message.success('测试成功, 可用工具:' + tools.length + '个');
+              }).catch(() => {
+                message.error('测试失败');
+              }).finally(() => {
+                setTesting(false);
+              });
             }}>测试连接</Button>
             <Button type="primary" onClick={() => {
               insertForm.validateFields().then((values) => {
@@ -166,10 +177,10 @@ const ToolsPage = () => {
           <Divider />
           <Form.Item name="type" label="type" rules={[{ required: true }]}>
             <Select options={[
-              { label: 'stdio', value: 'stdio' },
-              { label: 'websocket', value: 'websocket' },
+              { label: 'stdio', value: 'stdio', disabled: true },
+              { label: 'websocket', value: 'websocket', disabled: true },
               { label: 'streamable-http', value: 'streamable-http' },
-              { label: 'webhook', value: 'webhook' },
+              { label: 'webhook', value: 'webhook', disabled: true },
             ]} onChange={(value) => setType(value)} />
           </Form.Item>
           {(type == 'websocket' || type == 'streamable-http' || type == 'webhook') && (
@@ -263,10 +274,10 @@ const ToolsPage = () => {
           <Divider />
           <Form.Item name="type" label="type" rules={[{ required: true }]}>
             <Select options={[
-              { label: 'stdio', value: 'stdio' },
-              { label: 'websocket', value: 'websocket' },
+              { label: 'stdio', value: 'stdio', disabled: true },
+              { label: 'websocket', value: 'websocket', disabled: true },
               { label: 'streamable-http', value: 'streamable-http' },
-              { label: 'webhook', value: 'webhook' },
+              { label: 'webhook', value: 'webhook', disabled: true },
             ]} onChange={(value) => setType(value)} />
           </Form.Item>
           {(type == 'websocket' || type == 'streamable-http' || type == 'webhook') && (
