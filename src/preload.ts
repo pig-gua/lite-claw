@@ -33,10 +33,17 @@ type McpServer = {
   args: string[];
 };
 
+export type Tool = {
+    name: string
+    description: string
+    [key: string]: any
+}
+
 contextBridge.exposeInMainWorld('toolService', {
   getMcpServers: (): Promise<McpServer[]> => ipcRenderer.invoke('toolService:getMcpServers'),
   addMcpServer: (serverConfig: McpServer): Promise<void> => ipcRenderer.invoke('toolService:addMcpServer', serverConfig),
   updateMcpServer: (serverConfig: McpServer): Promise<void> => ipcRenderer.invoke('toolService:updateMcpServer', serverConfig),
-  deleteMcpServer: (name: string): Promise<void> => ipcRenderer.invoke('toolService:deleteMcpServer', name)
+  deleteMcpServer: (name: string): Promise<void> => ipcRenderer.invoke('toolService:deleteMcpServer', name),
+  testMcpServer: (serverConfig: McpServer): Promise<Tool[]> => ipcRenderer.invoke('toolService:testMcpServer', serverConfig)
 });
 

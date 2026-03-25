@@ -58,8 +58,19 @@ declare global {
         args: string[];
       }) => Promise<void>;
       deleteMcpServer: (name: string) => Promise<void>;
+      testMcpServer: (server: {
+        name: string;
+        type: string;
+        url: string;
+        command: string;
+        args: string[];
+      }) => Promise<Array<{
+        name: string
+        description: string
+        [key: string]: any
+      }>>;
     };
   }
 }
 
-export {};
+export { };

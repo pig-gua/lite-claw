@@ -105,3 +105,7 @@ ipcMain.handle('toolService:updateMcpServer', (_, serverConfig) => {
 ipcMain.handle('toolService:deleteMcpServer', (_, name) => {
   return toolService.deleteMcpServer(name);
 });
+
+ipcMain.handle('toolService:testMcpServer', (_, serverConfig) => {
+  return toolService.testMcpServer(serverConfig);
+});

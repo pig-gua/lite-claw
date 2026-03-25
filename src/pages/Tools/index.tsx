@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import { DeleteOutlined, EllipsisOutlined, MinusCircleOutlined, PlusOutlined, SettingOutlined } from '@ant-design/icons';
-import { Button, Card, Divider, Dropdown, Empty, Flex, Form, Input, message, Modal, Popconfirm, Select, Space } from 'antd';
-import { McpServer } from '@/service/tool-service';
+import { DeleteOutlined, MinusCircleOutlined, PlusOutlined, SettingOutlined } from '@ant-design/icons';
+import { Button, Card, Divider, Empty, Flex, Form, Input, message, Modal, Popconfirm, Select, Space } from 'antd';
+import { McpServer, Tool } from '@/service/tool-service';
 
 const { Meta } = Card;
 
@@ -222,6 +222,13 @@ const ToolsPage = () => {
             <Button loading={testing} onClick={() => {
               updateForm.validateFields();
               setTesting(true);
+              window.toolService.testMcpServer(updateForm.getFieldsValue()).then((tools: Tool[]) => {
+                message.success('测试成功, 可用工具:' + tools.length + '个');
+              }).catch(() => {
+                message.error('测试失败');
+              }).finally(() => {
+                setTesting(false);
+              });
             }}>测试连接</Button>
             <Button type="primary" onClick={() => {
               updateForm.validateFields().then((values) => {
