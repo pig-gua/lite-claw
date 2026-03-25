@@ -35,6 +35,30 @@ declare global {
         headers: Record<string, string>;
       }) => Promise<boolean>;
     };
+    toolService: {
+      getMcpServers: () => Promise<Array<{
+        name: string;
+        type: string;
+        url: string;
+        command: string;
+        args: string[];
+      }>>;
+      addMcpServer: (server: {
+        name: string;
+        type: string;
+        url: string;
+        command: string;
+        args: string[];
+      }) => Promise<void>;
+      updateMcpServer: (server: {
+        name: string;
+        type: string;
+        url: string;
+        command: string;
+        args: string[];
+      }) => Promise<void>;
+      deleteMcpServer: (name: string) => Promise<void>;
+    };
   }
 }
 

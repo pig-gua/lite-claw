@@ -2,6 +2,7 @@ import { app, BrowserWindow, ipcMain } from 'electron';
 import path from 'node:path';
 import started from 'electron-squirrel-startup';
 import * as modelService from './service/model-service';
+import * as toolService from './service/tool-service';
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (started) {
@@ -86,4 +87,21 @@ ipcMain.handle('modelService:deleteModel', (_, name) => {
 
 ipcMain.handle('modelService:testModelService', (_, model) => {
   return modelService.testModelService(model);
+});
+
+// 工具服务 IPC 事件处理
+ipcMain.handle('toolService:getMcpServers', () => {
+  return toolService.getMcpServers();
+});
+
+ipcMain.handle('toolService:addMcpServer', (_, server) => {
+  return toolService.addMcpServer(server);
+});
+
+ipcMain.handle('toolService:updateMcpServer', (_, server) => {
+  return toolService.updateMcpServer(server);
+});
+
+ipcMain.handle('toolService:deleteMcpServer', (_, name) => {
+  return toolService.deleteMcpServer(name);
 });
