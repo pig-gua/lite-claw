@@ -70,6 +70,18 @@ declare global {
         [key: string]: any
       }>>;
     };
+    skillService: {
+      getSkills: () => Promise<Array<{
+        name: string
+        version?: string
+        description?: string
+        author?: string
+        useWhen?: string
+        notFor?: string
+        constraints?: {tools: string[]}
+        errorMessage?: string
+      }>>;
+    };
   }
 }
 

@@ -3,6 +3,7 @@ import path from 'node:path';
 import started from 'electron-squirrel-startup';
 import * as modelService from './service/model-service';
 import * as toolService from './service/tool-service';
+import * as skillService from './service/skill-service';
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (started) {
@@ -108,4 +109,9 @@ ipcMain.handle('toolService:deleteMcpServer', (_, name) => {
 
 ipcMain.handle('toolService:testMcpServer', (_, serverConfig) => {
   return toolService.testMcpServer(serverConfig);
+});
+
+// 技能服务 IPC 事件处理
+ipcMain.handle('skillService:getSkills', () => {
+  return skillService.getSkills();
 });

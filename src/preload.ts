@@ -2,6 +2,7 @@
 // https://www.electronjs.org/docs/latest/tutorial/process-model#preload-scripts
 
 import { contextBridge, ipcRenderer } from 'electron';
+import { Skill } from './service/skill-service';
 
 // 模型类型定义
 type Model = {
@@ -47,3 +48,8 @@ contextBridge.exposeInMainWorld('toolService', {
   testMcpServer: (serverConfig: McpServer): Promise<Tool[]> => ipcRenderer.invoke('toolService:testMcpServer', serverConfig)
 });
 
+// 技能服务
+// 渲染进程调用方法: window.skillService.getSkills()
+contextBridge.exposeInMainWorld('skillService', {
+  getSkills: (): Promise<Skill[]> => ipcRenderer.invoke('skillService:getSkills')
+});

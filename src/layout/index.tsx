@@ -26,22 +26,22 @@ const manageItems: MenuItem[] = [
       },
       {
         key: 'models',
-        label: '模型管理',
+        label: '底层模型',
         icon: <OpenAIOutlined />,
       },
       {
         key: 'tools',
-        label: '工具管理',
+        label: '工具列表',
         icon: <ApiOutlined />,
       },
       {
         key: 'skills',
-        label: '技能管理',
+        label: '技能仓库',
         icon: <ReadOutlined />,
       },
       {
         key: 'agents',
-        label: 'Agent管理',
+        label: 'Agent配置',
         icon: <TeamOutlined />,
       },
     ],
